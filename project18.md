@@ -6,10 +6,10 @@
 
 ```tf
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "yheancarh-dev-terraform-bucket"
+  bucket = "isaac-dev-terraform-bucket"
 }
 
-resource "aws_s3_bucket_versioning" "terraform_state" {
+resource "aws_s3_bucket_versioning" "version" {
   bucket = aws_s3_bucket.terraform_state.id
 
   versioning_configuration {
@@ -46,38 +46,40 @@ resource "aws_dynamodb_table" "terraform_locks" {
 ```tf
 terraform {
   backend "s3" {
-    bucket         = "yheancarh-dev-terraform-bucket"
+    bucket         = "isaac-dev-terraform-bucket"
     key            = "global/s3/terraform.tfstate"
-    region         = "us-east-2"
+    region         = "us-east-1"
     dynamodb_table = "terraform-locks"
     encrypt        = true
   }
 }
 ```
 
-- Verify the changes
+- Verify the changes run terraform init to migrate local backend to s3 backend
 
-![S3](PBL-18/s3.png)
+![S3](images/s3m.png)
+![S3](images/s3.png)
 
-![dynamo](PBL-18/db.png)
+![dynamo](images/db.png)
 
 
-### Rafactoring Terraform Using Modules
+### Rafactoring Project Using Modules
 
 - Setup the modules directory
 
-![tree](PBL-18/tree.png)
+![tree](images/tree.png)
+![tree](images/tree2.png)
 
 - Run ```terraform init``` to initialize the modules
 
 - Run ```terraform fmt``` to format the files
 
-![fmt](PBL-18/fmt.png)
+![fmt](images/fmt.png)
 
 - Run ```terraform plan``` 
 
-![plan](PBL-18/plan.png)
+![plan](images/plan.png)
 
 - Run ```terraform apply``` and ```terraform destroy``` to test the configurations
 
-![test](PBL-18/test.png)
+![test](images/test.png)
